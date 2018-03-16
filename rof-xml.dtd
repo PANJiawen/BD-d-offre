@@ -1,0 +1,683 @@
+<?xml encoding="iso-8859-1"?>
+
+<!ELEMENT diplomes		(
+				informations,
+				mention*,
+				specialite*, programme*, 
+				annee*,
+				groupe*,
+				option*,
+				semestre*,
+				compr*,
+				enseignement*,
+				uecat*, struct*, personne*,
+				fiche_erasmus*, fiche_nsf*, fiche_rome*,
+				extra)>
+
+
+
+<!ELEMENT personnes		(ref-personne*)>
+<!ELEMENT responsables		(ref-personne*)>
+<!ELEMENT contributeurs		(ref-personne*)>
+<!ELEMENT intervenants		(ref-personne*)>
+<!ELEMENT liens-structure	(ref-struct*)>
+
+<!ELEMENT regimes			(regime_inscription*)>
+<!ELEMENT regime_inscription		(code_regime, commentaire)>
+<!ATTLIST regime_inscription  type	(FI|FC|FAL|FAP|CP) #REQUIRED>
+
+<!-- codage des références vers des objets -->
+
+<!ELEMENT ref-struct		EMPTY>
+<!ATTLIST ref-struct  ref	IDREF #REQUIRED>
+
+<!-- codage des domaines et composantes -->
+
+<!ELEMENT domaines		(domaine*)>
+<!ELEMENT domaine		(nom, contacts)>
+<!ATTLIST domaine  code		ID #REQUIRED>
+
+<!ELEMENT composantes		(composante*)>
+<!ELEMENT composante		(nom, web?, acronyme)>
+<!ATTLIST composante  code	ID #REQUIRED>
+
+<!ELEMENT refs-composante	(ref-composante*)>
+
+<!ELEMENT ref-composante	EMPTY>
+<!ATTLIST ref-composante  ref	IDREF #REQUIRED>
+
+<!ELEMENT ref-domaine		EMPTY>
+<!ATTLIST ref-domaine  ref	IDREF #REQUIRED>
+
+<!ELEMENT ref-specialite	EMPTY>
+<!ATTLIST ref-specialite  ref	IDREF #REQUIRED>
+
+<!-- codage de l'arborescence -->
+
+<!ELEMENT tree			(tree*)>
+<!ATTLIST tree  ref		IDREF #REQUIRED>
+
+<!-- codage des objectifs -->
+
+<!ELEMENT anglais		(nom, valide?, info*, err*)>
+
+<!-- fin -->
+
+<!ELEMENT personne	(
+			idext?,
+			mail?,
+			nom?,
+			prenom?,
+			telephone?,
+			version?
+			)>
+<!ATTLIST personne	code ID #REQUIRED>
+
+<!ELEMENT contacts	(contact+)>
+
+<!ELEMENT contact	(nom, telephone?, mail?)>
+
+
+<!ELEMENT type-licence		EMPTY >
+<!ELEMENT type-master		EMPTY >
+<!ELEMENT type-master1		EMPTY >
+<!ELEMENT type-master2		EMPTY >
+<!ELEMENT type-licence-pro	EMPTY >
+
+<!ELEMENT type-dut		EMPTY >
+<!ELEMENT type-desu-desiu	EMPTY >
+<!ELEMENT type-cesu		EMPTY >
+<!ELEMENT type-cu		EMPTY >
+<!ELEMENT type-du		EMPTY >
+<!ELEMENT type-DE		EMPTY >
+<!ELEMENT type-DE1		EMPTY >
+<!ELEMENT type-DE2		EMPTY >
+
+<!ELEMENT avec-parcours		EMPTY >
+
+
+<!ENTITY % typeDE1		"(type-DE1, (type-cu | type-du))" >
+
+<!ENTITY % typeDE2		"(type-DE2, (type-desu-desiu | type-cesu))" >
+
+<!ENTITY % typeDE		"(type-DE, (%typeDE1; | %typeDE2;))" >
+
+<!ENTITY % typeSP		"(
+				type-licence|
+				type-master|
+				type-licence-pro
+				)" >
+
+<!ENTITY % typeME		"(
+				type-licence|
+				type-master|
+				type-licence-pro|
+				type-dut|
+				(%typeDE;)
+				)" >
+
+<!ENTITY % typePR		"(
+				type-licence|
+				(type-master,(type-master1|type-master2)?)|
+				type-licence-pro|
+				type-dut|
+				(%typeDE;)
+				)" >
+
+<!ATTLIST xx-type-diplome  code ID #REQUIRED>
+
+<!ELEMENT xx-type-diplome (
+
+	type_diplome_rof*,
+	nom,
+	nom-court,
+	acronyme,
+	identificateur,
+	droits,
+	rang,
+	avec-credits?
+
+	) >
+
+
+<!ELEMENT objets		EMPTY >
+<!ATTLIST objets  sp		IDREFS #IMPLIED>
+<!ATTLIST objets  pr		IDREFS #IMPLIED>
+<!ATTLIST objets  cp		IDREFS #IMPLIED>
+<!ATTLIST objets  en		IDREFS #IMPLIED>
+<!ATTLIST objets  ca		IDREFS #IMPLIED>
+
+
+<!ELEMENT liste-objets		((ref|liste-objets)*) >
+<!ATTLIST liste-objets  nom	CDATA #IMPLIED>
+
+<!ELEMENT ref			EMPTY >
+<!ATTLIST ref		ref	IDREF #REQUIRED>
+
+
+
+<!ATTLIST mention  code ID #REQUIRED>
+
+<!ELEMENT mention (
+	nom, nom_complet, nom_nature, identificateur,
+	(%typeME;),
+	avec-parcours?,
+	mots-clefs,
+	responsables,
+	contributeurs,
+	structure,
+	refs-composante,
+	liste-objets,
+
+adaptation,
+ados_pro,
+ados_recherche,
+aide_ins_pro,
+aide_orientation,
+aide_reussite,
+annee_offre,
+articu_autres_format,
+auto_evaluation,
+avis_CA,
+avis_CEVU,
+avis_CS,
+code_dossier,
+competences,
+conditions_admission,
+connaissances,
+contexte,
+date_CA,
+date_CEVU,
+date_CS,
+date_modification,
+debouches,
+debut_habilitation,
+denomination_nationale?,
+etat-rof,
+fin_habilitation,
+finalite?,
+international,
+mcc,
+modifications?,
+nb_credits,
+org_pedago,
+politique_stages,
+pos_offre_etablis,
+pos_offre_region,
+poursuite_etudes,
+public,
+ref-domaine+,
+responsable-rof,
+secteur_pro?,
+struct_admin?,
+struct_pedago?,
+temoin_habilitation,
+temoin_specialites?,
+type_diplome,
+type_diplome_rof,
+validite_competences,
+version,
+web,
+
+	anglais?,
+	tree,
+	objets,
+	err*, publiable?
+	)>
+
+
+<!ELEMENT programme (
+	nom, nom-parcours?, identificateur,
+	(%typePR;),
+	mots-clefs,
+
+	apogee,
+	aspects_format_recherche,
+	capacite,
+	code_erasmus*,
+	code_mention,
+	code_nsf*,
+	code_rome*,
+	competences,
+	date_modification,
+	duree_stage,
+	ens_delocalises,
+	etat-rof,
+	infos_diverses,
+	langue,
+	mcc,
+	modalites_inscription,
+	modalites_pedago,
+	nb_credits,
+	objectifs,
+	politique_stages,
+	pre_requis,
+	pre_requis_oblig,
+	responsable-rof,
+	tronc_commun,
+	version,
+	vol_cm,
+	vol_td,
+	vol_tp,
+	web,
+	
+	anglais?,
+
+	regimes,
+	responsables,
+	contributeurs,
+	liens-structure,
+	structure,
+	objets,
+	
+	err*, publiable?
+	
+	)>
+<!ATTLIST programme
+  code ID #REQUIRED>
+
+
+<!ELEMENT specialite (
+	nom, nom_complet, identificateur,
+	(%typeSP;),
+	responsables,
+	contributeurs,
+	structure,
+	code_mention,
+	mots-clefs,
+
+	aide_ins_pro,
+	aide_orientation,
+	aide_reussite,
+	aspects_format_continue,
+	aspects_format_pro,
+	aspects_format_recherche,
+	conditions_admission,
+	connaissances,
+	date_modification,
+	debouches,
+	etat-rof,
+	finalite,
+	international,
+	mcc,
+	org_pedago,
+	politique_stages,
+	poursuite_etudes,
+	public,
+	version,
+	
+	anglais?,
+
+	err*, publiable?
+
+	)>
+
+<!ATTLIST specialite	code ID #REQUIRED>
+
+<!ENTITY % strME "((ref-specialite*)|(ref-programme*))" >
+<!ENTITY % strSP "(ref-programme*)" >
+<!ENTITY % strPR "(ref-annee|ref-semestre|ref-groupe|ref-compr|ref-option|ref-enseignement|ref-catalogue)*" >
+
+<!ELEMENT structure			((%strME;)|(%strPR;)) >
+
+<!ELEMENT ref-programme			EMPTY>
+<!ATTLIST ref-programme     ref 	IDREF #REQUIRED>
+
+<!ELEMENT ref-enseignement		EMPTY>
+<!ATTLIST ref-enseignement  ref 	IDREF #REQUIRED>
+
+<!ELEMENT ref-catalogue			EMPTY>
+<!ATTLIST ref-catalogue     ref		IDREF #REQUIRED>
+
+<!ELEMENT ref-personne			EMPTY>
+<!ATTLIST ref-personne      ref 	IDREF #REQUIRED>
+
+<!ENTITY % contentCP "(nom,nb_credits,code_pr,code_mention,mutualisable,structure,numero?,err*)" >
+
+<!ELEMENT option			(%contentCP;)>
+<!ATTLIST option  code 			ID #REQUIRED>
+<!ATTLIST option  cp 			(OP) #IMPLIED>
+
+<!ELEMENT ref-option			EMPTY>
+<!ATTLIST ref-option   ref		IDREF #REQUIRED>
+
+<!-- codage du CP generique -->
+
+<!ELEMENT compr				(%contentCP;)>
+<!ATTLIST compr  code 			ID #REQUIRED>
+<!ATTLIST compr  cp 			(TC) #IMPLIED>
+
+<!ELEMENT ref-compr			EMPTY>
+<!ATTLIST ref-compr  ref		IDREF #REQUIRED>
+
+<!-- codage du CP groupe -->
+
+<!ELEMENT groupe			(%contentCP;)>
+<!ATTLIST groupe  code 			ID #REQUIRED>
+<!ATTLIST groupe  cp 			(LI) #IMPLIED>
+
+<!ELEMENT ref-groupe			EMPTY>
+<!ATTLIST ref-groupe   ref		IDREF #REQUIRED>
+
+<!-- codage du CP semestre -->
+
+<!ELEMENT semestre			(%contentCP;)>
+<!ATTLIST semestre  code		ID #REQUIRED>
+<!ATTLIST semestre  cp 			(SE) #IMPLIED>
+
+<!ELEMENT ref-semestre			EMPTY>
+<!ATTLIST ref-semestre      ref 	IDREF #REQUIRED>
+
+<!-- codage du CP annee -->
+
+<!ELEMENT annee				(%contentCP;)>
+<!ATTLIST annee  code			ID #REQUIRED>
+<!ATTLIST annee  cp 			(AN) #IMPLIED>
+
+<!ELEMENT ref-annee		EMPTY >
+<!ATTLIST ref-annee      ref 	IDREF #REQUIRED >
+
+
+
+<!ELEMENT enseignement (
+	nom, identificateur,
+
+	apogee,	
+	bibliographie,	
+	capacite,	
+	capitalisation,
+	code_mention,
+	code_pr,
+	coefficient,
+	competences,
+	contenu,
+	date_modification,
+	discipline,
+	duree_stage,
+	etat-rof,
+	langue,
+	mcc,
+	modalites_organisation,
+	mutualisable,
+	nb_credits,
+	pre_requis,
+	pre_requis_oblig,
+	type_ens,
+	version,
+	vol_autres,
+	vol_cm,
+	vol_global,
+	vol_td,
+	vol_tp,
+	vol_travail,
+
+	anglais?,
+
+	responsables,
+	contributeurs,
+	intervenants,
+	liens-structure,
+	structure,
+	
+	err*, publiable?
+
+	)>
+
+
+
+<!ATTLIST enseignement  code ID #REQUIRED>
+
+
+
+
+<!ELEMENT uecat (
+	nom,
+	identificateur,
+
+	apogee,	
+	bibliographie,	
+	capacite,	
+	capitalisation,
+	coefficient,
+	competences,
+	contenu,
+	date_modification,
+	discipline,
+	duree_stage,
+	etat-rof,
+	langue,
+	mcc,
+	mise_en_service,
+	modalites_organisation,
+	nb_credits,
+	pre_requis,
+	pre_requis_oblig,
+	responsable-rof,
+	version,
+	vol_autres,
+	vol_cm,
+	vol_global,
+	vol_td,
+	vol_tp,
+	vol_travail,
+
+	responsables,
+	contributeurs,
+	intervenants,
+	liens-structure,
+
+	err*, publiable?
+
+	)>
+
+
+
+<!ATTLIST uecat  code ID #REQUIRED>
+
+
+
+<!ELEMENT struct (
+
+	intitule,
+	patronyme,
+	denomination_principale,
+	adr_num,
+	adr_voie,
+	adr_nom_voie,
+	adr_commune,
+	adr_pays,
+	adr_cp,
+	adr_code_postal,
+	adr_complement,
+	telephone,
+	fax,
+	mail,
+	web,
+	autres_complement,
+	type_structure,
+	type_composante,
+	personnes
+
+	)>
+
+
+<!ATTLIST struct  code ID #REQUIRED>
+
+
+<!ELEMENT patronyme 			(#PCDATA)>
+<!ELEMENT denomination_principale 	(#PCDATA)>
+<!ELEMENT adr_num 			(#PCDATA)>
+<!ELEMENT adr_voie 			(#PCDATA)>
+<!ELEMENT adr_nom_voie 			(#PCDATA)>
+<!ELEMENT adr_commune 			(#PCDATA)>
+<!ELEMENT adr_pays 			(#PCDATA)>
+<!ELEMENT adr_cp 			(#PCDATA)>
+<!ELEMENT adr_code_postal 		(#PCDATA)>
+<!ELEMENT adr_complement 		(#PCDATA)>
+<!ELEMENT fax 				(#PCDATA)>
+<!ELEMENT type_structure 		(#PCDATA)>
+<!ELEMENT type_composante 		(#PCDATA)>
+
+
+
+
+
+<!ELEMENT fiche_erasmus			(code_metier, libelle, libelle_travail)>
+<!ELEMENT fiche_nsf			(code_metier, libelle, libelle_travail)>
+<!ELEMENT fiche_rome			(code_metier, libelle, libelle_travail)>
+
+
+<!ELEMENT informations			(annee_offre)>
+
+
+
+<!ELEMENT err				(#PCDATA)>
+<!ATTLIST err   info			NMTOKEN #REQUIRED>
+
+<!ELEMENT mots-clefs			(item*)>
+<!ELEMENT item				(#PCDATA)>
+
+<!ELEMENT acronyme 			(#PCDATA)>
+<!ELEMENT adaptation			(body?)>
+<!ELEMENT ados_pro			(body?)>
+<!ELEMENT ados_recherche		(body?)>
+<!ELEMENT aide_ins_pro			(body?)>
+<!ELEMENT aide_orientation		(body?)>
+<!ELEMENT aide_reussite			(body?)>
+<!ELEMENT annee_offre 			(#PCDATA)>
+<!ELEMENT apogee	  	 	(#PCDATA)>
+<!ELEMENT articu_autres_format		(body?)>
+<!ELEMENT aspects_format_continue	(body?)>
+<!ELEMENT aspects_format_pro		(body?)>
+<!ELEMENT aspects_format_recherche	(body?)>
+<!ELEMENT auto_evaluation		(body?)>
+<!ELEMENT autres_complement 		(body?)>
+<!ELEMENT avec-credits			EMPTY>
+<!ELEMENT bibliographie   	 	(body?)>
+<!ELEMENT capacite	  	 	(#PCDATA)>
+<!ELEMENT capitalisation		(#PCDATA)>
+<!ELEMENT code_dossier 			(#PCDATA)>
+<!ELEMENT code_ens	  	 	(#PCDATA)>
+<!ELEMENT code_erasmus			(#PCDATA)>
+<!ELEMENT code_mention			(#PCDATA)>
+<!ELEMENT code_metier 			(#PCDATA)>
+<!ELEMENT code_nsf			(#PCDATA)>
+<!ELEMENT code_personne 		(#PCDATA)>
+<!ELEMENT code_pr 			(#PCDATA)>
+<!ELEMENT code_regime			(#PCDATA)>
+<!ELEMENT code_rome 			(#PCDATA)>
+<!ELEMENT coefficient	  	 	(body?)>
+<!ELEMENT commentaire	  	 	(body?)>
+<!ELEMENT competences			(body?)>
+<!ELEMENT conditions_admission		(body?)>
+<!ELEMENT connaissances			(body?)>
+<!ELEMENT contenu	  	 	(body?)>
+<!ELEMENT contexte			(body?)>
+<!ELEMENT date_modification	 	(#PCDATA)>
+<!ELEMENT debouches			(body?)>
+<!ELEMENT denomination_nationale 	(#PCDATA)>
+<!ELEMENT discipline	  	 	(body?)>
+<!ELEMENT droits 			(#PCDATA)>
+<!ELEMENT duree_stage	  	 	(#PCDATA)>
+<!ELEMENT ens_delocalises		(body?)>
+<!ELEMENT etat-rof	  	 	(#PCDATA)>
+<!ELEMENT finalite	  	 	(#PCDATA)>
+<!ELEMENT identificateur		(#PCDATA)>
+<!ELEMENT idext 			(#PCDATA)>
+<!ELEMENT indicateurs			(#PCDATA)>
+<!ELEMENT infos_diverses		(body?)>
+<!ELEMENT international			(body?)>
+<!ELEMENT intitule	  	 	(#PCDATA)>
+<!ELEMENT langue		 	(#PCDATA)>
+<!ELEMENT libelle 			(#PCDATA)>
+<!ELEMENT libelle_travail		(#PCDATA)>
+<!ELEMENT mail 				(#PCDATA)>
+<!ELEMENT mcc				(body?)>
+<!ELEMENT mise_en_service		(#PCDATA)>
+<!ELEMENT modalites_inscription		(body?)>
+<!ELEMENT modalites_organisation 	(body?)>
+<!ELEMENT modalites_pedago		(body?)>
+<!ELEMENT modifications			(body?)>
+<!ELEMENT mutualisable 			(#PCDATA)>
+<!ELEMENT nb_credits 			(#PCDATA)>
+<!ELEMENT nom-court			(#PCDATA)>
+<!ELEMENT nom-parcours 			(#PCDATA)>
+<!ELEMENT nom 				(#PCDATA)>
+<!ELEMENT nom_complet			(#PCDATA)>
+<!ELEMENT nom_nature			(#PCDATA)>
+<!ELEMENT numero			(#PCDATA)>
+<!ELEMENT objectifs			(body?)>
+<!ELEMENT org_pedago			(body?)>
+<!ELEMENT politique_stages		(body?)>
+<!ELEMENT pos_offre_etablis		(body?)>
+<!ELEMENT pos_offre_region		(body?)>
+<!ELEMENT poursuite_etudes		(body?)>
+<!ELEMENT prenom 			(#PCDATA)>
+<!ELEMENT pre_requis	  	 	(body?)>
+<!ELEMENT pre_requis_oblig	 	(body?)>
+<!ELEMENT publiable			(#PCDATA)>
+<!ELEMENT public			(body?)>
+<!ELEMENT rang	 			(#PCDATA)>
+<!ELEMENT responsable-rof		(ref-personne)>
+<!ELEMENT secteur_pro 			(#PCDATA)>
+<!ELEMENT struct_admin			(#PCDATA)>
+<!ELEMENT struct_pedago			(#PCDATA)>
+<!ELEMENT telephone 			(#PCDATA)>
+<!ELEMENT temoin_specialites		(#PCDATA)>
+<!ELEMENT tronc_commun 			(#PCDATA)>
+<!ELEMENT type_diplome 			(#PCDATA)>
+<!ELEMENT type_diplome_rof		(#PCDATA)>
+<!ELEMENT type_ens	  	 	(#PCDATA)>
+<!ELEMENT valide			EMPTY >
+<!ELEMENT validite_competences		(body?)>
+<!ELEMENT version 			(#PCDATA)>
+<!ELEMENT vol_autres	  	 	(#PCDATA)>
+<!ELEMENT vol_cm 			(#PCDATA)>
+<!ELEMENT vol_global	  	 	(#PCDATA)>
+<!ELEMENT vol_td	  	 	(#PCDATA)>
+<!ELEMENT vol_tp	  	 	(#PCDATA)>
+<!ELEMENT vol_travail	  	 	(#PCDATA)>
+<!ELEMENT web 				(#PCDATA)>
+
+
+<!ELEMENT date_CA 			(#PCDATA)>
+<!ELEMENT date_CEVU 			(#PCDATA)>
+<!ELEMENT date_CS 			(#PCDATA)>
+<!ELEMENT avis_CA 			(#PCDATA)>
+<!ELEMENT avis_CEVU 			(#PCDATA)>
+<!ELEMENT avis_CS 			(#PCDATA)>
+<!ELEMENT debut_habilitation 		(#PCDATA)>
+<!ELEMENT fin_habilitation 		(#PCDATA)>
+<!ELEMENT temoin_habilitation 		(#PCDATA)>
+<!ELEMENT valeur	 		(#PCDATA)>
+	
+<!ELEMENT info		 		((body)|(valeur+)|(ref-personne+))>
+<!ATTLIST info   nom			NMTOKEN #REQUIRED>
+
+
+<!-- texte riche -->
+
+<!-- le document -->
+<!ELEMENT body (p|ul|ol)* >
+<!-- le texte dans un paragraphe ou une liste -->
+<!ENTITY % texte  "(t|a|i|b|u|br)*" >
+<!ENTITY % flux   "(t|a|i|b|u|br|ul|ol)*" >
+<!ELEMENT t (#PCDATA)>
+<!ELEMENT b (#PCDATA)>
+<!ELEMENT i (#PCDATA)>
+<!ELEMENT u (#PCDATA)>
+<!ELEMENT a %texte;>
+<!ATTLIST a  href CDATA #IMPLIED>
+<!ELEMENT br EMPTY>
+<!-- paragraphe et liste -->
+<!ELEMENT p %texte;>
+<!ELEMENT ul (li*)>
+<!ELEMENT ol (li*)>
+<!ELEMENT li %flux; >
+
+
+
+<!ELEMENT extra			(domaines, composantes, xx-type-diplome+, x-diplome*)>
+
+
+<!ELEMENT x-diplome		(type_diplome, nom, web, refs-composante, ref-domaine)>
